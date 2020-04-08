@@ -1,0 +1,35 @@
+---
+- name: wheel group is exist
+  group:
+      name: wheel
+      state: present
+- name: wheel group has passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+  
+- name: bootstrap user is exist
+  user:
+    name: "{{ bootstrap_username }}" 
+    groups: wheel
+    append: yes 
+    state: present
+    createhome: yes
+
+- name: given public key is copied remotely inside ~/.ssh/authorized keys
+  authorized_key:
+    user: "{{ bootstrap_username }}"
+    state: present
+    key: '{{ item }}'
+  with_fileglob:
+    - "{{ bootstrap_publickey_path }}"
+  #- lineinfile: dest=/etc/ssh/sshd_config regexp='^#?LogLevel' line='LogLevel VERBOSE'
+- name: Ensure public key authentication is allowed
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^#?PubkeyAuthentication'
+    line: 'PubkeyAuthentication yes'
+  notify: SSHD is restarted
