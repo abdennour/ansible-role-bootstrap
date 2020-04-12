@@ -1,6 +1,7 @@
 ---
 - name: Converge
   hosts: all
+  become: yes
   vars:
     new_user: anyname
     key_path: /tmp/id_ssh_rsa
@@ -10,10 +11,10 @@
     import_role:
       name: abdennour.bootstrap
     vars:
-      bootstrap_publickey_path: "{{ key_path }}.pub"
+      bootstrap_keyair_path: "{{ key_path }}"
       bootstrap_username: "{{ new_user }}"
   post_tasks:
-  - name: the new bootstrap user can authenticate passwordless
+  - name: new bootstrap user authenticates passwordless privileged
     ping:
     remote_user: "{{ new_user }}"
     become: yes

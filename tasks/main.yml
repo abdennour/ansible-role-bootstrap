@@ -44,3 +44,10 @@
     line: 'PubkeyAuthentication yes'
   notify: SSHD is restarted
   when: ansible_connection == 'ssh'
+
+- name: backup
+  include_tasks: "{{ lookup('first_found', findone)}}"
+  vars:
+    findone:
+      - "backup-{{ bootstrap_backup.type | lower }}.yml"
+      - "backup-debug.yml"
