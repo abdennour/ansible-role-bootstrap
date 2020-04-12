@@ -1,11 +1,14 @@
+[![Build Status](https://travis-ci.org/abdennour/ansible-role-bootstrap.svg?branch=master)](https://travis-ci.org/abdennour/ansible-role-bootstrap)
+
 abdennnour.bootstrap
 =========
 
 Bootstrap Passwordless SSH User
 This is useful for the communication between the control node and the target host(s)
 
-
+```sh
 ansible-galaxy install abdennour.bootstrap
+```
 
 Requirements
 ------------
