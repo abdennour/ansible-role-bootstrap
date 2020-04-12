@@ -14,12 +14,12 @@
     regexp: '^%wheel'
     line: '%wheel ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
-  
+
 - name: bootstrap user is exist
   user:
-    name: "{{ bootstrap_username }}" 
+    name: "{{ bootstrap_username }}"
     groups: wheel
-    append: yes 
+    append: yes
     state: present
     createhome: yes
 
@@ -46,7 +46,7 @@
   when: ansible_connection == 'ssh'
 
 - name: backup
-  include_tasks: "{{ lookup('first_found', findone)}}"
+  include_tasks: "{{ lookup('first_found', findone) }}"
   vars:
     findone:
       - "backup-{{ bootstrap_backup.type | lower }}.yml"
