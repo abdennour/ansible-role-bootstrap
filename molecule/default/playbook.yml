@@ -12,15 +12,11 @@
     vars:
       bootstrap_publickey_path: "{{ key_path }}.pub"
       bootstrap_username: "{{ new_user }}"
-  pre_tasks:
-  - name: generate key pair
-    openssh_keypair:
-      path: "{{ key_path }}"
-    delegate_to: localhost
   post_tasks:
   - name: the new bootstrap user can authenticate passwordless
     ping:
-    remote_user: "{{ bootstrap_username }}"
+    remote_user: "{{ new_user }}"
     become: yes
     vars:
       ansible_ssh_private_key_file: "{{ key_path }}"
+      ansible_ssh_user: "{{ new_user }}"
