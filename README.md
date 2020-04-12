@@ -25,6 +25,8 @@ Role Variables
 | `bootstrap_keyair_path` | [path of SSH private keyp][1]                      | (string) `/tmp/{{ bootstrap_username }}_id_rsa` |
 | `bootstrap_keyair_type` | [algorithm used to generate the SSH private key][2]| (string) `rsa`                                  |
 | `bootstrap_keyair_size` | [number of bits in the private key to create][3]   | (int) `4096`                                    |
+| `bootstrap_backup.type` | Type of Backing up the private key of the new user | (string) `debug`                                |
+
 
 Dependencies
 ------------
