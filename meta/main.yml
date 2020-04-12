@@ -1,5 +1,6 @@
 galaxy_info:
-  author: Abdennour Toumi
+  author: abdennour
+  role_name: bootsrap
   description: Bootstrap Passwordless SSH User
   company: kubernetes.tn < http://kubernetes.tn >
 
@@ -16,7 +17,7 @@ galaxy_info:
   # - CC-BY-4.0
   license: BSD-3-Clause
 
-  min_ansible_version: 2.4
+  min_ansible_version: 2.8
 
   # If this a Container Enabled role, provide the minimum Ansible Container version.
   # min_ansible_container_version:
@@ -41,9 +42,6 @@ galaxy_info:
     versions:
     - jessie
   - name: Alpine
-    versions:
-    - all
-  - name: macOS
     versions:
     - all
 

@@ -1,4 +1,8 @@
 ---
+- name: sudo exists
+  package:
+    name: sudo
+    state: present
 - name: wheel group is exist
   group:
       name: wheel
@@ -19,13 +23,19 @@
     state: present
     createhome: yes
 
+- name: key pair is generated
+  openssh_keypair:
+    path: "{{ bootstrap_keyair_path }}"
+    type: "{{ bootstrap_keyair_type }}"
+    size: "{{ bootstrap_keyair_size }}"
+  delegate_to: localhost
+  become: no
 - name: given public key is copied remotely inside ~/.ssh/authorized keys
   authorized_key:
     user: "{{ bootstrap_username }}"
     state: present
-    key: '{{ item }}'
-  with_fileglob:
-    - "{{ bootstrap_publickey_path }}"
+    key: "{{ lookup('file', bootstrap_keyair_path + '.pub') }}"
+  when: ansible_connection == 'ssh'
   #- lineinfile: dest=/etc/ssh/sshd_config regexp='^#?LogLevel' line='LogLevel VERBOSE'
 - name: Ensure public key authentication is allowed
   lineinfile:
@@ -33,3 +43,4 @@
     regexp: '^#?PubkeyAuthentication'
     line: 'PubkeyAuthentication yes'
   notify: SSHD is restarted
+  when: ansible_connection == 'ssh'

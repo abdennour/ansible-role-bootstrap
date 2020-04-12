@@ -2,7 +2,6 @@ abdennnour.bootstrap
 =========
 
 Bootstrap Passwordless SSH User
-
 This is useful for the communication between the control node and the target host(s)
 
 
@@ -11,18 +10,26 @@ ansible-galaxy install abdennour.bootstrap
 Requirements
 ------------
 
-SSHD to be up and running on target host(s).
+The below requirements are needed on the host that executes this role:
+
+- ssh-keygen
 
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+
+| Variable                | Description                                        | Default / Choices                               |
+| ----------------------- | -----------------------------------------------    | ----------------------------------------------- |
+| `bootstrap_username`    | name of the new user                               | (string) `ansible`                              |
+| `bootstrap_keyair_path` | [path of SSH private keyp][1]                      | (string) `/tmp/{{ bootstrap_username }}_id_rsa` |
+| `bootstrap_keyair_type` | [algorithm used to generate the SSH private key][2]| (string) `rsa`                                  |
+| `bootstrap_keyair_size` | [number of bits in the private key to create][3]   | (int) `4096`                                    |
 
 Dependencies
 ------------
 
-No dependent roles
+ssh-keygen 
 
 Example Playbook
 ----------------
@@ -33,7 +40,6 @@ This is how you can use it:
       roles:
          - role: abdennour.bootstrap
            bootstrap_username: ansible
-           bootstrap_publickey_path: ~/.ssh/id_rsa.pub
           
 
 License
@@ -42,3 +48,6 @@ License
 BSD
 
 
+[1]: https://docs.ansible.com/ansible/latest/modules/openssh_keypair_module.html#parameter-path
+[2]: https://docs.ansible.com/ansible/latest/modules/openssh_keypair_module.html#parameter-type
+[3]: https://docs.ansible.com/ansible/latest/modules/openssh_keypair_module.html#parameter-size
