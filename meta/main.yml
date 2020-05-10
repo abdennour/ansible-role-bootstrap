@@ -1,6 +1,6 @@
 galaxy_info:
   author: abdennour
-  role_name: bootsrap
+  role_name: bootstrap
   description: Bootstrap Passwordless SSH User
   company: kubernetes.tn < http://kubernetes.tn >
 
